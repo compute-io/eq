@@ -55,7 +55,7 @@ out = eq( arr, compare, {'strict': false} );
 // returns [ 1, 1, 0, 0, 0 ] // 0 != null
 ```
 
-By default, if provided a comparison `array` which has a length equal to the input `array`, the function assumes an element-by-element comparison. To turn off element-by-element comparison for equal length `arrays`, set the `array` options flag to `true`.
+By default, if provided a comparison `array` which has a length equal to the input `array` length, the function assumes an element-by-element comparison. To turn off element-by-element comparison for equal length `arrays`, set the `array` options flag to `true`.
 
 ``` javascript
 var el = [ 1, 2 ],
