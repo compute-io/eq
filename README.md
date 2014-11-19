@@ -1,4 +1,4 @@
-eq
+Equal
 ===
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependencies][dependencies-image]][dependencies-url]
 
@@ -19,18 +19,83 @@ For use in the browser, use [browserify](https://github.com/substack/node-browse
 To use the module,
 
 ``` javascript
-var foo = require( 'compute-eq' );
+var eq = require( 'compute-eq' );
 ```
 
-#### foo( arr )
+#### eq( arr, x[, opts] )
 
-What does this function do?
+Computes an element-wise comparison (equality) for each input `array` element. `x` may either be an `array` of equal length or a single value (`number` or `string`).
+
+The function returns an `array` with length equal to that of the input `array`. Each output `array` element is either `0` or `1`. A value of `1` means that an element is equal to a compared value and `0` means that an element is __not__ equal to a compared value.
+
+``` javascript
+var arr = [ 5, 3, 8, 3, 2 ],
+	out;
+
+// Single comparison value:
+out = eq( arr, 3 );
+// returns [ 0, 1, 0, 1, 0 ]
+
+// Array of comparison values:
+out = eq( arr, [ 5, 2, 8, 7, 3 ] );
+// returns [ 1, 0, 1, 0, 0 ]
+```
+
+By default, the function enforces strict equality. To turn off type equality, set the `strict` options flag to `false`.
+
+``` javascript
+var arr = [ 1, 0, 3, null, undefined ],
+	compare = [ true, false, 2, 0, 1 ],
+	out;
+
+out = eq( arr, compare );
+// returns [ 0, 0, 0, 0, 0 ];
+
+out = eq( arr, compare, {'strict': false} );
+// returns [ 1, 1, 0, 0, 0 ] // 0 != null
+```
+
+By default, if provided a comparison `array` which has a length equal to the input `array`, the function assumes an element-by-element comparison. To turn off element-by-element comparison for equal length `arrays`, set the `array` options flag to `true`.
+
+``` javascript
+var el = [ 1, 2 ],
+	arr = [ el, null ],
+	out;
+
+out = eq( arr, el );
+// returns [ 0, 0 ];
+
+out = eq( arr, el, {'array': true} );
+// returns [ 1, 0 ];
+```
+
+
+
+
+## Notes
+
+*	Currently, this function only computes shallow equality and does __not__ compute deep equality when comparing `arrays` or `objects`.
 
 
 ## Examples
 
 ``` javascript
-var foo = require( 'compute-eq' );
+var eq = require( 'compute-eq' ),
+	sum = require( 'compute-sum' );
+
+// Simulate some data...
+var data = new Array( 100 );
+
+for ( var i = 0; i < data.length; i++ ) {
+	data[ i ] = Math.round( Math.random()*20 );
+}
+
+var out = eq( data, 10 );
+
+// Count the number of values equal to 10...
+var count = sum( out );
+
+console.log( 'Total: %d', count );
 ```
 
 To run the example code from the top-level application directory,
