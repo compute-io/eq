@@ -24,7 +24,7 @@ var eq = require( 'compute-eq' );
 
 #### eq( arr, x[, opts] )
 
-Computes an element-wise comparison (equality) for each input `array` element. `x` may either be an `array` of equal length or a single value (`number` or `string`).
+Computes an element-wise comparison (equality) for each input `array` element. `x` may either be an `array` of equal length or a single value (of any type).
 
 The function returns an `array` with length equal to that of the input `array`. Each output `array` element is either `0` or `1`. A value of `1` means that an element is equal to a compared value and `0` means that an element is __not__ equal to a compared value.
 
