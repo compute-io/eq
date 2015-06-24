@@ -292,7 +292,7 @@ describe( 'compute-eq', function tests() {
 
 	it( 'should return an empty data structure if provided an empty data structure', function test() {
 		assert.deepEqual( eq( [], 1 ), [] );
-		// assert.deepEqual( eq( matrix( [0,0] ), 1 ).data, matrix( [0,0] ).data );
+		assert.deepEqual( eq( matrix( [0,0] ), 1 ).data, matrix( [0,0], 'uint8' ).data );
 		assert.deepEqual( eq( new Int8Array(), 1 ), new Uint8Array() );
 	});
 
