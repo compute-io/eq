@@ -23,14 +23,12 @@ var eq = require( 'compute-eq' );
 
 #### eq( x, y[, opts] )
 
-Computes an element-wise comparison (equality). `x` can be an [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays) a [`matrix`](https://github.com/dstructs/matrix) or any single value. `y` has to be either an `array` or `matrix` of equal dimensions as `x` or any other value. The function returns an `array` with length equal to that of the input `array`.
-
-Each output `array` element is either `0` or `1`. A value of `1` means that an element is equal to a compared value and `0` means that an element is __not__ equal to a compared value. Correspondingly, the function returns either an `array` with length equal to that of the input `array`, a `matrix` with equal dimensions as input `x` or a single value. Each output element is either `0` or `1`. A value of `1` means that an element is equal to the compared value  and `0` means that an element is __not__ equal to the compared value.
+Computes an element-wise comparison (equality). `x` can be an [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays) a [`matrix`](https://github.com/dstructs/matrix) or any single value. `y` has to be either an `array` or `matrix` of equal dimensions as `x` or any other value. Correspondingly, the function returns either an `array` with length equal to that of the input `array`, a `matrix` with equal dimensions as input `x` or a single value. Each output element is either `0` or `1`. A value of `1` means that an element is equal to the compared value  and `0` means that an element is __not__ equal to the compared value.
 
 ``` javascript
 var matrix = require( 'dstructs-matrix' ),
     data,
-	y,
+    y,
     mat,
     out,
     i;
@@ -44,7 +42,6 @@ out = eq( data, 3 );
 // Array of comparison values:
 out = eq( data, [ 5, 2, 8, 7, 3 ] );
 // returns [ 1, 0, 1, 0, 0 ]
-
 
 // Matrices
 data = new Int32Array( 9 );
@@ -82,7 +79,7 @@ The function accepts the following `options`:
 * 	__accessor__: accessor `function` for accessing `array` values.
 *	__copy__: `boolean` indicating if the `function` should return a new data structure. Default: `true`.
 *	__strict__: `boolean` indicating if the `function` should enforce strict equality (`===`) or weak equality (`==`). Default: `true`.
-*	__array__: [deepget](https://github.com/kgryte/utils-deep-get)/[deepset](https://github.com/kgryte/utils-deep-set) key path separator. Default: `false`.
+*	__array__: `boolean` indicating whether to turn off element-by-element comparison when provided an `array` as comparator `y` with the same length as `x`. Default: `false`.
 
 By default, the function enforces strict equality. To turn off type equality, set the `strict` options flag to `false`.
 
@@ -280,7 +277,7 @@ $ make view-cov
 
 ## Copyright
 
-Copyright &copy; 2014-2015. The Compute.io Authors.
+Copyright &copy; 2014-2015. The [Compute.io](https://github.com/compute-io) Authors.
 
 [npm-image]: http://img.shields.io/npm/v/compute-eq.svg
 [npm-url]: https://npmjs.org/package/compute-eq
