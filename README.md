@@ -23,7 +23,7 @@ var eq = require( 'compute-eq' );
 
 #### eq( x, y[, opts] )
 
-Computes an element-wise comparison (equality). `x` can be an [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays) a [`matrix`](https://github.com/dstructs/matrix) or any single value. `y` has to be either an `array` or `matrix` of equal dimensions as `x` or any other value. Correspondingly, the function returns either an `array` with length equal to that of the input `array`, a `matrix` with equal dimensions as input `x` or a single value. Each output element is either `0` or `1`. A value of `1` means that an element is equal to the compared value  and `0` means that an element is __not__ equal to the compared value.
+Computes an element-wise comparison (equality). `x` can be an [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays),  [`matrix`](https://github.com/dstructs/matrix) or any single value. `y` has to be either an `array` or `matrix` of equal dimensions as `x` or any other value. Correspondingly, the function returns either an `array` with length equal to that of the input `array`, a `matrix` with equal dimensions as input `x` or a single value. Each output element is either `0` or `1`. A value of `1` means that an element is equal to the compared value  and `0` means that an element is __not__ equal to the compared value.
 
 ``` javascript
 var matrix = require( 'dstructs-matrix' ),
@@ -216,22 +216,56 @@ bool = ( mat === out );
 ## Examples
 
 ``` javascript
-var eq = require( 'compute-eq' ),
+var matrix = require( 'dstructs-matrix' ),
+	eq = require( 'compute-eq' ),
 	sum = require( 'compute-sum' );
 
-// Simulate some data...
-var data = new Array( 100 );
+var data,
+	mat,
+	out,
+	tmp,
+	i;
 
-for ( var i = 0; i < data.length; i++ ) {
+// Plain arrays...
+data = new Array( 100 );
+for ( i = 0; i < data.length; i++ ) {
 	data[ i ] = Math.round( Math.random()*20 );
 }
-
-var out = eq( data, 10 );
+out = eq( data, 10 );
 
 // Count the number of values equal to 10...
 var count = sum( out );
 
-console.log( 'Total: %d', count );
+// Object arrays (accessors)...
+function getValue( d ) {
+	return d.x;
+}
+for ( i = 0; i < data.length; i++ ) {
+	data[ i ] = {
+		'x': data[ i ]
+	};
+}
+out = eq( data, 10, {
+	'accessor': getValue
+});
+
+// Typed arrays...
+data = new Float64Array( 100 );
+for ( i = 0; i < data.length; i++ ) {
+	data[ i ] = Math.round( Math.random()*20 );
+}
+tmp = eq( data, 10 );
+out = '';
+for ( i = 0; i < data.length; i++ ) {
+	out += tmp[ i ];
+	if ( i < data.length-1 ) {
+		out += ',';
+	}
+}
+
+// Matrices...
+mat = matrix( data, [10,10], 'float64' );
+out = eq( mat, 10 );
 ```
 
 To run the example code from the top-level application directory,
